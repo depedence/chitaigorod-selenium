@@ -1,6 +1,8 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.wait import WebDriverWait
+
 from config.config import config
 
 def get_chrome_options():
@@ -13,6 +15,17 @@ def get_chrome_options():
     options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
 
     options.add_argument(f'--window-size={config.WINDOW_SIZE}')
+
+    prefs = {
+        "profile.default_content_setting_values.geolocation": 2,
+        "profile.default_content_setting_values.notifications": 2,
+        "profile.default_content_setting_values.media_stream": 2,
+        "profile.default_content_setting_values.media_stream_mic": 2,
+        "profile.default_content_setting_values.media_stream_camera": 2,
+        "profile.default_content_setting_values.ppapi_broker": 2,
+        "profile.default_content_setting_values.automatic_downloads": 2
+    }
+    options.add_experimental_option("prefs", prefs)
 
     # Headless
     if config.HEADLESS:
@@ -46,6 +59,14 @@ def driver():
     })
 
     driver.get(config.BASE_URL)
+
+    WebDriverWait(driver, 20).until(
+        lambda d: d.execute_script('return document.readyState') == 'complete'
+    )
+
+    # Local Storage
+    driver.execute_script('window.localStorage.setItem("chg_is_adult_confirmed", "true");')
+
     driver.maximize_window()
 
     yield driver
@@ -55,12 +76,12 @@ def driver():
 @pytest.fixture(scope='function', autouse=True)
 def log_test_info(request):
     """ Auto log test """
-    print(f"\n{'=' * 80}")
+    print(f"\n{'-' * 80}")
     print(f"Starting test: {request.node.name}")
-    print(f"{'=' * 80}")
+    print(f"{'-' * 80}")
 
     yield
 
-    print(f"\n{'=' * 80}")
+    print(f"\n{'-' * 80}")
     print(f"Finished test: {request.node.name}")
-    print(f"{'=' * 80}")
+    print(f"{'-' * 80}")

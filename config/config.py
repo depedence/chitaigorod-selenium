@@ -4,7 +4,7 @@ class Config:
     """ Base config """
 
     # base url
-    BASE_URL = 'https://www.dns-shop.ru'
+    BASE_URL = 'https://www.chitai-gorod.ru'
 
     # browser
     BROWSER = 'chrome'

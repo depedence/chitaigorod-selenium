@@ -5,7 +5,7 @@ from config.config import config
 class BasePage:
     """ Base Page for other Page Object Model """
 
-    def __init__(self, driver, base_url, timeout = 10):
+    def __init__(self, driver, base_url = config.BASE_URL, timeout = 10):
         self.driver = driver
         self.base_url = base_url.rstrip('/')
         self.wait = WebDriverWait(driver, timeout)
@@ -25,6 +25,10 @@ class BasePage:
             el.clear()
 
         el.send_keys(text)
+        return el
+
+    def is_visible(self, locator):
+        self.wait.until(ec.visibility_of_element_located(locator))
 
     def get_text(self, locator):
         return self.wait.until(ec.visibility_of_element_located(locator)).text

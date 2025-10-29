@@ -19,3 +19,5 @@ class Config:
     # paths
     SCREENSHOTS = 'screenshots'
     REPORTS_PATH = 'reports'
+
+config = Config()

@@ -15,7 +15,7 @@ class MenuPage(BasePage):
     sale_page = (by.CLASS_NAME, 'app-wrapper__content')
 
     # Actions
-    def open_main(self):
+    def open_menu(self):
         self.open(self.PATH)
 
     # Suites

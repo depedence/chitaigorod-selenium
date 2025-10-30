@@ -6,7 +6,7 @@ from pages.menu_page import MenuPage
 def test_certificate_menu(driver):
     page = MenuPage(driver)
 
-    page.open_main()
+    page.open_menu()
     page.certificate_check()
 
 @pytest.mark.menu
@@ -14,7 +14,7 @@ def test_certificate_menu(driver):
 def test_bonusProgram_menu(driver):
     page = MenuPage(driver)
 
-    page.open_main()
+    page.open_menu()
     page.bonusProgram_check()
 
 @pytest.mark.menu
@@ -22,5 +22,5 @@ def test_bonusProgram_menu(driver):
 def test_sale_menu(driver):
     page = MenuPage(driver)
 
-    page.open_main()
+    page.open_menu()
     page.sale_check()

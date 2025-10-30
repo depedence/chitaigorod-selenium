@@ -9,10 +9,15 @@ class SearchPage(BasePage):
 
     # Locators
     search_textbox = (by.CSS_SELECTOR, '.search-form__input')
+    search_list = (by.CSS_SELECTOR, '.suggests-list')
     first_block = (by.CSS_SELECTOR, 'article.app-products-list__item:nth-child(1)')
     product_header = (by.CSS_SELECTOR, '.product-detail-page__title')
     buy_btn = (by.CSS_SELECTOR, '.product-buttons__main-action')
+
+    cart = (by.CSS_SELECTOR, 'button.header-controls__btn:nth-child(4)')
     indicator = (by.CSS_SELECTOR, '.chg-indicator')
+    delete_btn = (by.CSS_SELECTOR, '.cart-item__delete-button')
+    delete_msg = (by.CSS_SELECTOR, '.cart-item-deleted__title')
 
     # Actions
     def open_search(self):
@@ -39,9 +44,17 @@ class SearchPage(BasePage):
     def indicator_is_visible(self):
         self.is_visible(self.indicator)
 
+    def delete_msg_is_visible(self):
+        return self.is_visible(self.delete_msg)
+
     # Suites
     def add_product_to_cart(self):
         self.go_to_product()
         self.get_product_header()
         self.tap_buy_button()
         self.indicator_is_visible()
+
+    def delete_product_from_cart(self):
+        self.click(self.cart)
+        self.click(self.delete_btn)
+        self.delete_msg_is_visible()

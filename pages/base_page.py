@@ -6,10 +6,10 @@ from config.config import config
 class BasePage:
     """ Base Page for other Page Object Model """
 
-    def __init__(self, driver, base_url = config.BASE_URL, timeout = 10):
+    def __init__(self, driver, base_url = config.BASE_URL, timeout=None):
         self.driver = driver
         self.base_url = base_url.rstrip('/')
-        self.wait = WebDriverWait(driver, timeout)
+        self.wait = WebDriverWait(driver, timeout or config.EXPLICIT_WAIT)
 
     def open(self, path = '/'):
         url = self.base_url + ('' if path.startswith('/') else '/') + path
@@ -36,6 +36,9 @@ class BasePage:
 
     def is_visible(self, locator):
         self.wait.until(ec.visibility_of_element_located(locator))
+
+    def is_not_visible(self, locator):
+        self.wait.until(ec.invisibility_of_element_located(locator))
 
     def get_text(self, locator):
         return self.wait.until(ec.visibility_of_element_located(locator)).text

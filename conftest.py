@@ -1,5 +1,6 @@
-import uuid
 import pytest
+import subprocess
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
@@ -33,17 +34,23 @@ def get_chrome_options():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-gpu')
-    options.add_argument(f"--user-data-dir=/tmp/chrome-{uuid.uuid4()}")
 
     return options
+
 
 @pytest.fixture(scope='function')
 def driver():
     """ WebDriver fixture """
+    try:
+        subprocess.run(['pkill', '-9', 'chrome'], check=False, stderr=subprocess.DEVNULL)
+        subprocess.run(['pkill', '-9', 'chromedriver'], check=False, stderr=subprocess.DEVNULL)
+        time.sleep(1)
+    except:
+        pass
+
     options = get_chrome_options()
     driver = webdriver.Chrome(options=options)
 
-    # Timeout settings
     driver.implicitly_wait(config.IMPLICIT_WAIT)
     driver.set_page_load_timeout(config.PAGE_LOAD_TIMEOUT)
 
@@ -65,7 +72,6 @@ def driver():
         lambda d: d.execute_script('return document.readyState') == 'complete'
     )
 
-    # Local Storage
     driver.execute_script('window.localStorage.setItem("chg_user_location","true");')
     driver.execute_script('window.localStorage.setItem("chg_is_adult_confirmed","true");')
 
@@ -73,6 +79,12 @@ def driver():
 
     try:
         driver.quit()
+    except:
+        pass
+
+    try:
+        subprocess.run(['pkill', '-9', 'chrome'], check=False, stderr=subprocess.DEVNULL)
+        subprocess.run(['pkill', '-9', 'chromedriver'], check=False, stderr=subprocess.DEVNULL)
     except:
         pass
 

@@ -5,13 +5,16 @@ class CatalogPage(BasePage):
     PATH = '/'
 
     # Locators
+    welcome_modal = (by.CLASS_NAME, 'tippy-box')
+    close_welcome_modal_btn = (by.CSS_SELECTOR, '.tippy-content .chg-app-button--breeze')
+
     catalog_btn = (by.CSS_SELECTOR, '.header-sticky__catalog button')
     catalog_menu = (by.CLASS_NAME, 'categories-menu')
 
-    supplies_for_artists = (by.NAME, 'Товары для художников')
-    paints = (by.NAME, 'Краски')
-    gouache = (by.NAME, 'Гуашь')
-    gouache_header = (by.CLASS_NAME, 'global-left-right-indent app-catalog__header')
+    supplies_for_artists = (by.XPATH, '//span[text()="Товары для художников"]')
+    paints = (by.XPATH, '//span[text()="Краски"]')
+    gouache = (by.XPATH, '//span[text()="Гуашь"]')
+    gouache_header = (by.CSS_SELECTOR, '.global-left-right-indent.app-catalog__header')
 
     # Actions
     def open_catalog(self):

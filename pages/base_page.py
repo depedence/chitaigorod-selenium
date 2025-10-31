@@ -1,3 +1,4 @@
+from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from config.config import config
@@ -16,7 +17,13 @@ class BasePage:
 
     def click(self, locator):
         """ Wait to be clickable and click """
-        self.wait.until(ec.element_to_be_clickable(locator)).click()
+        element = self.wait.until(ec.element_to_be_clickable(locator))
+
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            self.driver.execute_script('arguments[0].click()', element)
+            print(f'LOG: Element {locator} was clicked from JavaScript')
 
     def type(self, locator, text, clear: bool = True):
         el = self.wait.until(ec.visibility_of_element_located(locator))

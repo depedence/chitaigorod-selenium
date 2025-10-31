@@ -58,6 +58,7 @@ def driver():
             '''
     })
 
+    driver.maximize_window()
     driver.get(config.BASE_URL)
 
     WebDriverWait(driver, 20).until(
@@ -68,11 +69,12 @@ def driver():
     driver.execute_script('window.localStorage.setItem("chg_user_location","true");')
     driver.execute_script('window.localStorage.setItem("chg_is_adult_confirmed","true");')
 
-    driver.maximize_window()
-
     yield driver
 
-    driver.quit()
+    try:
+        driver.quit()
+    except:
+        pass
 
 @pytest.fixture(scope='function', autouse=True)
 def log_test_info(request):

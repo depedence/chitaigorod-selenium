@@ -1,6 +1,4 @@
 import pytest
-import subprocess
-import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
@@ -27,7 +25,6 @@ def get_chrome_options():
     }
     options.add_experimental_option("prefs", prefs)
 
-    # Headless
     if config.HEADLESS:
         options.add_argument('--headless=new')
 
@@ -37,17 +34,9 @@ def get_chrome_options():
 
     return options
 
-
 @pytest.fixture(scope='function')
 def driver():
     """ WebDriver fixture """
-    try:
-        subprocess.run(['pkill', '-9', 'chrome'], check=False, stderr=subprocess.DEVNULL)
-        subprocess.run(['pkill', '-9', 'chromedriver'], check=False, stderr=subprocess.DEVNULL)
-        time.sleep(1)
-    except:
-        pass
-
     options = get_chrome_options()
     driver = webdriver.Chrome(options=options)
 
@@ -77,16 +66,7 @@ def driver():
 
     yield driver
 
-    try:
-        driver.quit()
-    except:
-        pass
-
-    try:
-        subprocess.run(['pkill', '-9', 'chrome'], check=False, stderr=subprocess.DEVNULL)
-        subprocess.run(['pkill', '-9', 'chromedriver'], check=False, stderr=subprocess.DEVNULL)
-    except:
-        pass
+    driver.quit()
 
 @pytest.fixture(scope='function', autouse=True)
 def log_test_info(request):

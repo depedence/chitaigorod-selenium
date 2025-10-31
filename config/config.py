@@ -1,4 +1,6 @@
 """ Project configuration """
+import os
+
 
 class Config:
     """ Base config """
@@ -8,7 +10,8 @@ class Config:
 
     # browser
     BROWSER = 'chrome'
-    HEADLESS = False
+    IS_CI = os.getenv('CI') == 'true'
+    HEADLESS = IS_CI
     WINDOW_SIZE = "1920,1080"
 
     # timeouts

@@ -8,7 +8,7 @@ class Config:
 
     # browser
     BROWSER = 'chrome'
-    HEADLESS = False
+    HEADLESS = True
     WINDOW_SIZE = "1920,1080"
 
     # timeouts

@@ -42,3 +42,7 @@ class BasePage:
 
     def get_text(self, locator):
         return self.wait.until(ec.visibility_of_element_located(locator)).text
+
+    def wait_and_get_text(self, locator, timeout):
+        wait = WebDriverWait(self.driver, timeout or config.EXPLICIT_WAIT)
+        return wait.until(ec.visibility_of_element_located(locator)).text

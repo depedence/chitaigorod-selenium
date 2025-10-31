@@ -64,6 +64,7 @@ def driver():
 
     # Local Storage
     driver.execute_script('window.localStorage.setItem("chg_user_location","true");')
+    driver.execute_script('window.localStorage.setItem("chg_is_adult_confirmed","true");')
 
     driver.maximize_window()
 

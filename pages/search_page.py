@@ -33,9 +33,10 @@ class SearchPage(BasePage):
 
     def go_to_product(self):
         self.click(self.first_block)
+        self.wait.until(lambda d: "product" in d.current_url or len(d.current_url) > len(self.PATH))
 
     def get_product_header(self):
-        header = self.get_text(self.product_header)
+        header = self.wait_and_get_text(self.product_header, timeout=20)
         assert self.PRODUCT_NAME in header
 
     def tap_buy_button(self):

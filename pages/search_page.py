@@ -11,8 +11,8 @@ class SearchPage(BasePage):
     search_textbox = (by.CSS_SELECTOR, '.search-form__input')
     search_list = (by.CSS_SELECTOR, '.suggests-list')
     first_block = (by.CSS_SELECTOR, 'article.app-products-list__item:nth-child(1)')
-    product_header = (by.CSS_SELECTOR, '.product-detail-page__title')
-    buy_btn = (by.CSS_SELECTOR, '.product-buttons__main-action')
+    product_header = (by.LINK_TEXT, 'Путешествие в Элевсин')
+    buy_btn = (by.CSS_SELECTOR, 'button.product-buttons__main-action')
 
     cart = (by.CSS_SELECTOR, 'button.header-controls__btn:nth-child(4)')
     indicator = (by.CSS_SELECTOR, '.chg-indicator')

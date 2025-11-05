@@ -26,7 +26,7 @@ def get_chrome_options():
     options.add_experimental_option("prefs", prefs)
 
     if config.HEADLESS:
-        options.add_argument('--headless=new')
+        options.add_argument('--headless')
 
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
@@ -68,15 +68,15 @@ def driver():
 
     driver.quit()
 
-@pytest.fixture(scope='function', autouse=True)
-def log_test_info(request):
-    """ Auto log test """
-    print(f"\n{'-' * 80}")
-    print(f"Starting test: {request.node.name}")
-    print(f"{'-' * 80}")
+# @pytest.fixture(scope='function', autouse=True)
+# def log_test_info(request):
+#     """ Auto log test """
+#     print(f"\n{'-' * 80}")
+#     print(f"Starting test: {request.node.name}")
+#     print(f"{'-' * 80}")
 
-    yield
+#     yield
 
-    print(f"\n{'-' * 80}")
-    print(f"Finished test: {request.node.name}")
-    print(f"{'-' * 80}")
+#     print(f"\n{'-' * 80}")
+#     print(f"Finished test: {request.node.name}")
+#     print(f"{'-' * 80}")

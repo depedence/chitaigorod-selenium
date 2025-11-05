@@ -42,3 +42,20 @@ jobs:
           path: |
             reports/
             screenshots/
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            reports/report.html
+            screenshots/
+          retention-days: 30
+
+      - name: Show screenshot info
+        if: failure()
+        run: |
+          echo "=== SCREENSHOTS CREATED ==="
+          find screenshots/ -name "*.png" | head -10
+          echo "============================"

@@ -66,6 +66,13 @@ def driver():
 
     yield driver
 
+    try:
+        timestamp = datetime.datetime.now().strfrime('%Y%m%d_%H%M%S')
+        os.makedirs('screenshots', exist_ok=True)
+        driver.save_screenshot(f'screenshots/final_state_{timestamp}.png')
+    except:
+        pass
+
     driver.quit()
 
 # @pytest.fixture(scope='function', autouse=True)

@@ -76,6 +76,17 @@ def driver():
 
     driver.quit()
 
+@pytest.fixture(scope='function')
+def search_api():
+    from api.search_api import SearchAPI
+    api = SearchAPI()
+    yield api
+    api.close()
+
+@pytest.fixture(scope="session")
+def test_author():
+    return "Пелевин"
+
 # @pytest.fixture(scope='function', autouse=True)
 # def log_test_info(request):
 #     """ Auto log test """

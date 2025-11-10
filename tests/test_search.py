@@ -1,6 +1,7 @@
 import pytest
 from pages.search_page import SearchPage
 
+@pytest.mark.ui
 @pytest.mark.search
 @pytest.mark.smoke
 def test_search_product(driver):
@@ -11,6 +12,7 @@ def test_search_product(driver):
     page.get_first_block_attribute()
     page.add_product_to_cart()
 
+@pytest.mark.ui
 @pytest.mark.search
 @pytest.mark.smoke
 def test_cart(driver):

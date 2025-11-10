@@ -6,6 +6,7 @@ def test_environment_info(driver):
     print(f"Window Size: {driver.get_window_size()}")
     print(f"Page Load Strategy: {driver.capabilities['pageLoadStrategy']}")
 
+@pytest.mark.ui
 @pytest.mark.catalog
 @pytest.mark.smoke
 def test_catalog_is_visible(driver):
@@ -15,6 +16,7 @@ def test_catalog_is_visible(driver):
 
     page.open_and_check_catalog()
 
+@pytest.mark.ui
 @pytest.mark.catalog
 @pytest.mark.smoke
 def test_catalog_is_working(driver):
